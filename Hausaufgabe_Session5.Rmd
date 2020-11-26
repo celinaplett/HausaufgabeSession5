@@ -18,7 +18,7 @@ Erstellung eines Dataframes
 users_books <- all %>%
   group_by(`Book-Title`) %>%
   mutate(no_of_books = n()) %>%
-  filter(no_of_books > 49) %>%
+  filter(no_of_books > 300) %>%
   filter(`Book-Rating` > 9) %>%
   select(`User-ID`, `Book-Title`)
   
@@ -63,9 +63,30 @@ rect.hclust(books.hc, k=3, border="red")
 ```
 
 ```{r}
-books_wide %>%
+books_wide%>%
   mutate(cluster = groups) %>%
   left_join(books_wide) %>%
   select(cluster,`User-ID`)
 ```
+
+K Means Clustering
+
+```{r}
+k.means.fit <- kmeans(books_wide, 2) 
+```
+
+```{r}
+k.means.fit$size
+```
+
+```{r}
+clusplot(books_wide, k.means.fit$cluster, color=TRUE, shade=TRUE,
+labels=4, lines=0, main="K-means cluster plot")
+```
+
+
+```{r}
+table(books_wide$`User-ID`,k.means.fit$cluster)
+```
+
 
