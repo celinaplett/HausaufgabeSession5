@@ -30,7 +30,6 @@ df
 df %>% mutate(i = 1) %>% spread(fruit, i, fill = 0)
 ```
 
-
 ```{r}
 users_books <- users_books %>%
   unique()
@@ -39,7 +38,7 @@ books_wide <- users_books %>%
   spread(`Book-Title`,i,fill=0)
 ```
 
-Hierarchisches Cluster: 
+Erstellen eines Hierarchischen Clusters: 
 
 ```{r}
 books.scaled <- as.data.frame(scale(books_wide))
@@ -52,7 +51,6 @@ wss <- (nrow(books.scaled)-1)*sum(apply(books.scaled,2,var))
 plot(1:10, wss, type="b", xlab="Number of Clusters",
      ylab="Within groups sum of squares")
 ```
-
 
 ```{r}
 books.dist <- dist(books.scaled, method="euclidean")
@@ -69,7 +67,7 @@ books_wide%>%
   select(cluster,`User-ID`)
 ```
 
-K Means Clustering
+Erstellen eines K Means Clusterings: 
 
 ```{r}
 k.means.fit <- kmeans(books_wide, 2) 
@@ -84,9 +82,10 @@ clusplot(books_wide, k.means.fit$cluster, color=TRUE, shade=TRUE,
 labels=4, lines=0, main="K-means cluster plot")
 ```
 
-
 ```{r}
 table(books_wide$`User-ID`,k.means.fit$cluster)
 ```
 
+Welche Bücher sind in welchem Cluster?
 
+Anscheinend gehören alle Bücher dem 2. Cluster an. 
